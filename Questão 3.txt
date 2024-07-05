@@ -1,0 +1,60 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct Pessoa {
+    string codigo;
+    double altura;
+    double peso;
+};
+
+int main() {
+    ifstream arquivoAltura("altura.txt");
+    ifstream arquivoPeso("peso.txt");
+
+    vector<Pessoa> pessoas;
+
+    if (arquivoAltura.is_open() && arquivoPeso.is_open()) {
+        string codigo;
+        double altura, peso;
+
+        while (arquivoAltura >> codigo >> altura && arquivoPeso >> codigo >> peso) {
+            pessoas.push_back({codigo, altura, peso});
+        }
+
+        arquivoAltura.close();
+        arquivoPeso.close();
+
+        // Encontrar a pessoa com maior altura
+        double maiorAltura = 0.0;
+        string pessoaMaiorAltura;
+
+        for (const auto& pessoa : pessoas) {
+            if (pessoa.altura > maiorAltura) {
+                maiorAltura = pessoa.altura;
+                pessoaMaiorAltura = pessoa.codigo;
+            }
+        }
+
+        // Encontrar a pessoa com maior peso
+        double maiorPeso = 0.0;
+        string pessoaMaiorPeso;
+
+        for (const auto& pessoa : pessoas) {
+            if (pessoa.peso > maiorPeso) {
+                maiorPeso = pessoa.peso;
+                pessoaMaiorPeso = pessoa.codigo;
+            }
+        }
+
+        cout << "Pessoa com maior altura (código): " << pessoaMaiorAltura << endl;
+        cout << "Pessoa com maior peso (código): " << pessoaMaiorPeso << endl;
+    } else {
+        cerr << "Erro ao abrir os arquivos." << endl;
+    }
+
+    return 0;
+}

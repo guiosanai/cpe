@@ -1,0 +1,80 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+#include <iomanip>
+
+using namespace std;
+
+struct Aluno {
+    string nome;
+    double nota;
+};
+
+// Função para cadastrar um novo aluno
+void cadastrarAluno(vector<Aluno>& alunos) {
+    Aluno novoAluno;
+    cout << "Informe o nome do aluno: ";
+    cin >> novoAluno.nome;
+    cout << "Informe a nota do aluno: ";
+    cin >> novoAluno.nota;
+    alunos.push_back(novoAluno);
+}
+
+// Função para adicionar nota a um aluno
+void adicionarNota(vector<Aluno>& alunos, const string& nome) {
+    for (auto& aluno : alunos) {
+        if (aluno.nome == nome) {
+            cout << "Informe a nova nota para " << aluno.nome << ": ";
+            cin >> aluno.nota;
+            return;
+        }
+    }
+    cout << "Aluno não encontrado." << endl;
+}
+
+// Função para calcular a média de um aluno
+void calcularMedia(const vector<Aluno>& alunos, const string& nome) {
+    for (const auto& aluno : alunos) {
+        if (aluno.nome == nome) {
+            cout << "Média de " << aluno.nome << ": " << fixed << setprecision(2) << aluno.nota << endl;
+            return;
+        }
+    }
+    cout << "Aluno não encontrado." << endl;
+}
+
+int main() {
+    vector<Aluno> alunos;
+
+    int opcao;
+    do {
+        cout << "\nMenu:\n1. Cadastrar aluno\n2. Adicionar nota de um aluno\n3. Calcular média de um aluno\n4. Fechar o programa\n";
+        cout << "Escolha uma opção: ";
+        cin >> opcao;
+
+        switch (opcao) {
+            case 1:
+                cadastrarAluno(alunos);
+                break;
+            case 2:
+                cout << "Informe o nome do aluno: ";
+                string nome;
+                cin >> nome;
+                adicionarNota(alunos, nome);
+                break;
+            case 3:
+                cout << "Informe o nome do aluno: ";
+                cin >> nome;
+                calcularMedia(alunos, nome);
+                break;
+            case 4:
+                cout << "Programa encerrado." << endl;
+                break;
+            default:
+                cout << "Opção inválida." << endl;
+        }
+    } while (opcao != 4);
+
+    return 0;
+}

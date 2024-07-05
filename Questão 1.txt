@@ -1,0 +1,70 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+// Função para ler os vetores do arquivo
+vector<vector<int>> lerVetores(const string& nomeArquivo) {
+    ifstream arquivo(nomeArquivo);
+    vector<vector<int>> vetores;
+
+    if (arquivo.is_open()) {
+        string linha;
+        while (getline(arquivo, linha)) {
+            vector<int> vetor;
+            int valor;
+            istringstream stream(linha);
+            while (stream >> valor) {
+                vetor.push_back(valor);
+            }
+            vetores.push_back(vetor);
+        }
+        arquivo.close();
+    } else {
+        cerr << "Erro ao abrir o arquivo " << nomeArquivo << endl;
+    }
+
+    return vetores;
+}
+
+// Função para somar os vetores
+vector<int> somarVetores(const vector<vector<int>>& vetores) {
+    vector<int> resultado;
+    for (const auto& vetor : vetores) {
+        if (resultado.empty()) {
+            resultado = vetor;
+        } else {
+            for (size_t i = 0; i < vetor.size(); ++i) {
+                resultado[i] += vetor[i];
+            }
+        }
+    }
+    return resultado;
+}
+
+// Função para salvar o vetor resultado em um arquivo
+void salvarResultado(const vector<int>& resultado, const string& nomeArquivo) {
+    ofstream arquivo(nomeArquivo);
+    if (arquivo.is_open()) {
+        for (int valor : resultado) {
+            arquivo << valor << " ";
+        }
+        arquivo.close();
+    } else {
+        cerr << "Erro ao criar o arquivo " << nomeArquivo << endl;
+    }
+}
+
+int main() {
+    const string nomeArquivoEntrada = "vetores.txt";
+    const string nomeArquivoSaida = "soma.txt";
+
+    vector<vector<int>> vetores = lerVetores(nomeArquivoEntrada);
+    vector<int> resultado = somarVetores(vetores);
+    salvarResultado(resultado, nomeArquivoSaida);
+
+    cout << "Resultado salvo em " << nomeArquivoSaida << endl;
+
+    return 0;
+}
