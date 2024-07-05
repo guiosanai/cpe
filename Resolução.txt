@@ -1,0 +1,56 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+struct Ramal {
+    int numero;
+    string categoria;
+    string setor;
+    string edificio;
+    string sala;
+    string responsavel;
+    string responsavelAteste;
+};
+
+int main() {
+    vector<Ramal> ramais; // Armazena os ramais cadastrados
+
+    // Função para cadastrar um novo ramal
+    auto cadastrarRamal = &ramais {
+        Ramal novoRamal;
+        cout << "Número do ramal: ";
+        cin >> novoRamal.numero;
+        cout << "Categoria: ";
+        cin >> novoRamal.categoria;
+        cout << "Setor: ";
+        cin >> novoRamal.setor;
+        cout << "Edifício: ";
+        cin >> novoRamal.edificio;
+        cout << "Sala: ";
+        cin >> novoRamal.sala;
+        cout << "Responsável: ";
+        cin >> novoRamal.responsavel;
+        cout << "Responsável pelo ateste: ";
+        cin >> novoRamal.responsavelAteste;
+
+        ramais.push_back(novoRamal);
+    };
+
+    cadastrarRamal();
+
+    // Exibir os ramais cadastrados
+    cout << "\nRamais cadastrados:\n";
+    for (const auto& ramal : ramais) {
+        cout << "Número: " << ramal.numero << "\n";
+        cout << "Categoria: " << ramal.categoria << "\n";
+        cout << "Setor: " << ramal.setor << "\n";
+        cout << "Edifício: " << ramal.edificio << "\n";
+        cout << "Sala: " << ramal.sala << "\n";
+        cout << "Responsável: " << ramal.responsavel << "\n";
+        cout << "Responsável pelo ateste: " << ramal.responsavelAteste << "\n\n";
+    }
+
+    return 0;
+}
